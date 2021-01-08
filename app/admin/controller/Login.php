@@ -18,4 +18,8 @@ class Login extends BaseController
         // return '您好！这是一个[admin]示例应用';
         return View::fetch();
     }
+    public function check(){
+        return 'ddd';
+        return show(config('status.success'), 'success');
+    }
 }
