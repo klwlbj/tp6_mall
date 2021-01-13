@@ -36,8 +36,9 @@
             <div>
                 <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off" class="layui-input admin-input admin-input-verify input-val" value="">
 <!--                <canvas ></canvas>-->
-                <div class="admin-captcha">{:captcha_img('', '', 95, 40)}</div>
+<!--                <div class="admin-captcha">{:captcha_img('', '', 95, 40)}</div>-->
 <!--                <img src="{:url('verify/index')}" alt="" onclick='this.src="/index.php/captcha.html"'/>-->
+                <img src="{:url('verify/index')}"  onclick='this.src="{:url('verify/index')}?"+Math.random();'  width="95" height="40" class="admin-captcha">
             </div>
             <button class="layui-btn admin-button" lay-submit="" lay-filter="login">登 录</button>
         </form>
