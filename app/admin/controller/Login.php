@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 use app\BaseController;
 use think\facade\View;
+use app\common\model\mysql\AdminUser;
 class Login extends BaseController
 {
     public function index()
@@ -36,6 +37,9 @@ class Login extends BaseController
             return show(config('status.error'),'captcha eroor');
         }
         // 校验密码等
+        $adminUserObj = new AdminUser();
+        $adminUser = $adminUserObj->getAdminUsername($username);
+        halt($adminUser);
         // return 'ddd';
         return show(config('status.success'), 'success');
     }
