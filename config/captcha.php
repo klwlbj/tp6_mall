@@ -33,6 +33,8 @@ return [
 
     'abc' => [
         'length' => 4,
+        'codeSet'  => '23456',
+
     ]
     // 添加额外的验证码设置
     // verify => [

@@ -7,10 +7,10 @@ class Index extends BaseController
 {
     public function index()
     {
-        return '您好！这是一个[admin]示例应用';
+        // return '您好！这是一个[admin]示例应用';
         return view();
     }
-    public function login()
+    public function welcome()
     {
         // return '您好！这是一个[admin]示例应用';
         return view();

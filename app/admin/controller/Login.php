@@ -37,10 +37,58 @@ class Login extends BaseController
             return show(config('status.error'),'captcha eroor');
         }
         // 校验密码等
-        $adminUserObj = new AdminUser();
-        $adminUser = $adminUserObj->getAdminUsername($username);
-        halt($adminUser);
+        try{
+            $adminUserObj = new AdminUser();
+            $adminUser = $adminUserObj->getAdminUsernameByUsername($username);
+            // halt($adminUser);
+            if($adminUser == array() || $adminUser['status'] != config("status.mysql.table_normal")){
+                return show(config('status.error'),'error username');
+
+            }
+            $adminUser = $adminUser->toArray();
+            if($adminUser['password'] != $this->password_md5($password)){
+                return show(config('status.error'),'error password');
+
+            }
+            $res = $adminUserObj->updateById($adminUser['id'],array(
+                'last_login_ip' => $this->request->ip(),
+                'last_login_time' => time(),
+                'update_time' => time(),
+            ));
+            if(empty($res)){
+                return show(config('status.error'),'error login');
+
+            }
+        }catch (\Exception $e){
+            //$e->message 记录日志
+            return show(config('status.error'),'exception login');
+
+        }
+        session(config('admin.session_admin'),$adminUser);
         // return 'ddd';
         return show(config('status.success'), 'success');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
