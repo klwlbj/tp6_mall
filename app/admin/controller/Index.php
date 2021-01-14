@@ -3,7 +3,8 @@ declare (strict_types = 1);
 
 namespace app\admin\controller;
 use app\BaseController;
-class Index extends BaseController
+use app\admin\controller\AdminBase;
+class Index extends AdminBase
 {
     public function index()
     {
