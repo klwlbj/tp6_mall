@@ -16,5 +16,5 @@ function show($status, $message = '', $data = [], $httpStatus = 200)
         // 'httpStatus' => $httpStatus,
     ];
 
-    return json_encode($result, $httpStatus);
+    return json($result, $httpStatus);
 }

@@ -15,12 +15,19 @@ class Login extends BaseController
         $code = input('param.code', 0, "intval");
         $type = input('param.type', 0, "intval");
 
-        $data = array('phone_number' => $phoneNumber, "code" => $code, "type" => $code);
+        $data = array('phone_number' => $phoneNumber, "code" => $code, "type" => $type);
         $validate = new User();
         if (!$validate->scene('login')->check($data)) {
             return show(config('status.error'), $validate->getError());
         } else {
-            $res = (new \app\common\business\User())->login($data);
+            try {
+                $res = (new \app\common\business\User())->login($data);
+            } catch (\Exception $e) {
+                return show($e->getCode() . $e->getMessage());
+            }
+            if ($res) {
+                return show(config('status.success'), 'success login', $res);
+            }
             return show(config('status.error'), 'fail login');
         }
     }

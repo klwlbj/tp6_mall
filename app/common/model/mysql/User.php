@@ -6,6 +6,9 @@ use think\Model;
 
 class User extends Model
 {
+    /*
+     * 自动写入时间
+     */
     protected $autoWriteTimestamp = true;
     public function getUsernameByPhoneNumber($phoneNumber)
     {
@@ -13,15 +16,15 @@ class User extends Model
             return false;
         }
         $where = [
-            '$phone_number' => trim($phoneNumber)
+            'phone_number' => trim($phoneNumber)
         ];
         return $this->where($where)->find();
     }
-    public function updateById($id, $data){
-        if(empty($id) || !is_array($data) || $data == array()){
+    public function updateByPhoneNumber($phoneNumber, $data){
+        if(empty($phoneNumber) || !is_array($data) || $data == array()){
             return false;
         }
-        $where = array('id' => $id);
+        $where = array('phone_number' => $phoneNumber);
         return $this->where($where)->save($data);
     }
 
