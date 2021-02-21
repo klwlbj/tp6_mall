@@ -62,4 +62,20 @@ class User
         $cacheRes = cache(config('redis.token_pre') . $token, $redisData, Time::userLoginExpiresTime($data['type']));
         return $cacheRes ? compact('token', 'username') : false;
     }
+
+    /**
+     * 返回正常用户数据
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getNormalUserById($id){
+        $user = $this->userObj->getUserById($id);
+        if(!$user || $user->status != config('status.mysql.table_normal')){
+            return [];
+        }
+        return $user->toArray();
+    }
 }

@@ -28,6 +28,22 @@ class User extends Model
         return $this->where($where)->save($data);
     }
 
+    /**
+     * 通过id获取用户数据
+     * @param $id
+     * @return array|false|Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUserById($id){
+        $id = intval($id);
+        if(!$id){
+            return false;
+        }
+        return $this->find($id);
+    }
+
 
 
 
