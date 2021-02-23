@@ -71,11 +71,44 @@ class User
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getNormalUserById($id){
+    public function getNormalUserById($id)
+    {
         $user = $this->userObj->getUserById($id);
-        if(!$user || $user->status != config('status.mysql.table_normal')){
+        if (!$user || $user->status != config('status.mysql.table_normal')) {
             return [];
         }
         return $user->toArray();
+    }
+
+    /**
+     * 返回正常用户数据
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getNormalUserByUsername($username)
+    {
+        $user = $this->userObj->getUserByUsername($username);
+        if (!$user || $user->status != config('status.mysql.table_normal')) {
+            return [];
+        }
+        return $user->toArray();
+    }
+
+    public function update($id, $data)
+    {
+        //检查用户是否存在
+        $user = $this->getNormalUserById($id);
+        if(!$user){
+            throw new \think\Exception('userid is not exist');
+        }
+        //检查用户名是否存在
+        $userResult = $this->getNormalUserByUsername($data['username']);
+        if ($userResult && $userResult['id'] != $id) {
+            throw new \think\Exception('username is exist');
+        }
+        return $this->userObj->updateById($id, $data);
     }
 }

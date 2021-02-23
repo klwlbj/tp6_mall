@@ -12,6 +12,7 @@ class User extends validate
         // 'username' => 'require',
         'code' => 'require|number|min:4',
         'type' => ['require', 'in'=> "1,2"],
+        'sex' => ['require', 'in'=>'0,1,2']
     );
 
     protected $message = array(
@@ -22,10 +23,13 @@ class User extends validate
         'code.min' => 'code < 4',
         'type.require' => 'type require',
         'type.in' => 'type error',
+        'sex.require' => 'sex require',
+        'sex.in'=>'sex not in'
     );
 
     protected $scene = [
         'send_code ' => ['phone_number'],
         "login" => ['phone_number', "code", "type"],
+        "update_user" => ['username', "sex"],
     ];
 }
